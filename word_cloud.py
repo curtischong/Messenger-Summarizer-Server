@@ -5,38 +5,39 @@ def weightFunction(convoList, slang, freq_dict):
 
 
     weights = []
+    all_words = set()
     for msg in convoList:
-        print(msg)
-
         for word in msg['msg']:
-            currScore = 3
+            all_words.add(word)
+    for word in all_words:
+        currScore = 3
 
-            #Scores based on frequency in conversation
-            if freq_dict.get(word, 0) < 3:
-                currScore = currScore - 1
-            elif freq_dict.get(word, 9) < 6:
-                currScore += 2
-            else:
-                currScore += 3
+        #Scores based on frequency in conversation
+        if freq_dict.get(word, 0) < 3:
+            currScore = currScore - 1
+        elif freq_dict.get(word, 9) < 6:
+            currScore += 2
+        else:
+            currScore += 3
 
-            #Scores based on length of string
-            if len(word) > 4 and len(word) < 6:
-                currScore += 1
-            elif len(word) > 6:
-                currScore += 2
-            else:
-                currScore = currScore -1
+        #Scores based on length of string
+        if len(word) > 4 and len(word) < 6:
+            currScore += 1
+        elif len(word) > 6:
+            currScore += 2
+        else:
+            currScore = currScore -1
 
-            #Scores based on if string is slang
-            if word in slang:
-                currScore = currScore - 2
-            else:
-                currScore += 2
-            if word in greetings:
-                currScore = 0
-            weights.append({
-              'x': word,
-              'value': currScore
-            })
+        #Scores based on if string is slang
+        if word in slang:
+            currScore = currScore - 2
+        else:
+            currScore += 2
+        if word in greetings:
+            currScore = 0
+        weights.append({
+          'x': word,
+          'value': currScore
+        })
 
     return weights
