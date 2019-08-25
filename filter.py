@@ -96,7 +96,7 @@ def fix_slang(word, slang_dict):
     return slang_dict[word]
   return word
 
-def simplify_messages(msgs, slang_dict):
+def simplify_messages(msgs):
     new_msgs = []
     for msg in msgs:
         new_msg = {
@@ -105,17 +105,16 @@ def simplify_messages(msgs, slang_dict):
           'id': msg['id']
         }
         for word in msg['msg']:
-            word = fix_slang(word, slang_dict)
             # new_msg.append(ps.stem(correction(word)))
             new_msg['msg'].append(ps.stem(word))
         new_msgs.append(new_msg)
     return new_msgs
 
-def get_tokenized_sentences(arr):
+def get_tokenized_sentences(arr, slang_dict):
     new_msg = []
     for msg in arr:
         new_msg.append({
-          'omsg': msg['msg'],
+          'omsg': fix_slang(msg['msg'], slang_dict),
           'msg': nltk.word_tokenize(msg['msg'].lower()), # lowering is important!
           'id': msg['id']
         })
@@ -132,8 +131,8 @@ def get_word_freq_dict(tokenized_arr):
     return word_freq
 
 def get_most_important_sentence(convo, slang_dict):
-    tokenized_convo = get_tokenized_sentences(convo)
-    simplified_convo = simplify_messages(tokenized_convo, slang_dict)
+    tokenized_convo = get_tokenized_sentences(convo, slang_dict)
+    simplified_convo = simplify_messages(tokenized_convo)
     word_freq = get_word_freq_dict(simplified_convo)
 
     max_val = -999
