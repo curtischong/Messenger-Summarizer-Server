@@ -145,4 +145,4 @@ def get_most_important_sentence(convo, slang_dict):
         if(value > max_val):
             max_val = value
             max_msg = msg
-    return max_msg, word_freq
+    return max_msg, word_freq, tokenized_convo

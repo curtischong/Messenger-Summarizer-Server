@@ -19,13 +19,13 @@ def get_phrases():
     if(convo == []):
       continue
 
+    weight, word_freq, tokenized_arr = get_most_important_sentence(convo, slang_dict)
     word_cloud_weight = None
     if(len(convo) > 5): # generate word cloud
-      word_cloud_weight = weightFunction(convo, slang_dict)
+      word_cloud_weight = weightFunction(tokenized_arr, slang_dict, word_freq)
 
-    weight, word_freq = get_most_important_sentence(convo, slang_dict)
     important_sentences.append({
-      "text": weight
+      "text": weight,
       "word_cloud": word_cloud_weight
     })
 

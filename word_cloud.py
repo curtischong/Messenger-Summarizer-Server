@@ -3,15 +3,15 @@ greetings = ["hi", "hello", "hey", "helloo", "hellooo", "g morining", "gmorning"
 #Assumes the entire array comes from one conversation
 def weightFunction(convoList, slang, freq_dict):
 
-    returnList = []
 
-    for convo in convoList:
-        weights = {}
+    weights = []
+    for msg in convoList:
+        print(msg)
 
-        for word in convo:
+        for word in msg['msg']:
             currScore = 3
 
-        #Scores based on frequency in conversation
+            #Scores based on frequency in conversation
             if freq_dict.get(word, 0) < 3:
                 currScore = currScore - 1
             elif freq_dict.get(word, 9) < 6:
@@ -19,7 +19,7 @@ def weightFunction(convoList, slang, freq_dict):
             else:
                 currScore += 3
 
-        #Scores based on length of string
+            #Scores based on length of string
             if len(word) > 4 and len(word) < 6:
                 currScore += 1
             elif len(word) > 6:
@@ -27,14 +27,16 @@ def weightFunction(convoList, slang, freq_dict):
             else:
                 currScore = currScore -1
 
-        #Scores based on if string is slang
+            #Scores based on if string is slang
             if word in slang:
                 currScore = currScore - 2
             else:
                 currScore += 2
             if word in greetings:
                 currScore = 0
-            weights[word] = currScore
+            weights.append({
+              'x': word,
+              'value': currScore
+            })
 
-        returnList.append(weights)
-    return returnList
+    return weights
