@@ -9,7 +9,6 @@ CORS(app)
 def get_phrases():
   messages = get_messages_time_blocked(json.loads(request.args.get("messages")))
   important_sentences = []
-  print("asdsad")
   for convo in messages:
     if(convo == []):
       continue
