@@ -1,7 +1,12 @@
 # Note: This spell checker takes a long time to load
 # https://www.kaggle.com/cpmpml/spell-checker-using-word2vec
 import gensim
+import time
+
+print("loadng wiki news")
+start_time1 = time.time()
 spell_model = gensim.models.KeyedVectors.load_word2vec_format('wiki-news-300d-1M.vec')
+print("--- %s seconds ---" % (time.time() - start_time1))
 words = spell_model.index2word
 w_rank = {}
 for i,word in enumerate(words):
@@ -37,3 +42,5 @@ def edits2(word):
     return (e2 for e1 in edits1(word) for e2 in edits1(e1))
 def singlify(word):
     return "".join([letter for i,letter in enumerate(word) if i == 0 or letter != word[i-1]])
+
+    

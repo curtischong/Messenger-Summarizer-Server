@@ -3,3 +3,4 @@ __pycache__/
 wiki-news-300d-1M.vec
 *.h5
 embeddings/
+.vscode/

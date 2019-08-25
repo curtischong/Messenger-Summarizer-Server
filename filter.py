@@ -1,15 +1,13 @@
 import json
 import nltk
 from nltk.stem import PorterStemmer
-from nltk.corpus import stopwords
-# from spell_checker import correction
+from spell_checker import correction
 
 ps = PorterStemmer()
 
 import spacy
 nlp = spacy.load("en_core_web_sm")
 
-stopwords = set(stopwords.words('english'))
 
 
 def get_perc_upper(msg):
@@ -105,8 +103,10 @@ def simplify_messages(msgs):
           'id': msg['id']
         }
         for word in msg['msg']:
-            # new_msg.append(ps.stem(correction(word)))
-            new_msg['msg'].append(ps.stem(word))
+            if(not nlp.vocab[word].is_stop):
+                # new_msg.append(ps.stem(correction(word)))
+                word = correction(word)
+                new_msg['msg'].append(ps.stem(word))
         new_msgs.append(new_msg)
     return new_msgs
 
