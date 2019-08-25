@@ -11,9 +11,6 @@ nlp = spacy.load("en_core_web_sm")
 
 stopwords = set(stopwords.words('english'))
 
-slang_file = open('slang.json')
-slang_str = slang_file.read()
-slang_dict = json.loads(json.loads(slang_str))
 
 def get_perc_upper(msg):
     len_msg = len(msg)
@@ -94,12 +91,12 @@ def get_messages_time_blocked(json1_data):
         new_messages.append(new_convos)
     return new_messages
 
-def fix_slang(word):
+def fix_slang(word, slang_dict):
   if word in slang_dict:
     return slang_dict[word]
   return word
 
-def simplify_messages(msgs):
+def simplify_messages(msgs, slang_dict):
     new_msgs = []
     for msg in msgs:
         new_msg = {
@@ -108,7 +105,7 @@ def simplify_messages(msgs):
           'id': msg['id']
         }
         for word in msg['msg']:
-            word = fix_slang(word)
+            word = fix_slang(word, slang_dict)
             # new_msg.append(ps.stem(correction(word)))
             new_msg['msg'].append(ps.stem(word))
         new_msgs.append(new_msg)
@@ -134,9 +131,9 @@ def get_word_freq_dict(tokenized_arr):
                 word_freq[word] = 0
     return word_freq
 
-def get_most_important_sentence(convo):
+def get_most_important_sentence(convo, slang_dict):
     tokenized_convo = get_tokenized_sentences(convo)
-    simplified_convo = simplify_messages(tokenized_convo)
+    simplified_convo = simplify_messages(tokenized_convo, slang_dict)
     word_freq = get_word_freq_dict(simplified_convo)
 
     max_val = -999
@@ -148,4 +145,4 @@ def get_most_important_sentence(convo):
         if(value > max_val):
             max_val = value
             max_msg = msg
-    return max_msg
+    return max_msg, word_freq
