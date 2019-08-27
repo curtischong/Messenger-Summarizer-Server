@@ -1,11 +1,8 @@
-# Messenger-Assistant-Server
+# Messenger-Summarizer-Server
+Written by Flora Sun and Curtis Chong.
 
+This is the server for Messenger Summarizer. Read what it can do here: [github.com/curtischong/Messenger-Summarizer](https://github.com/curtischong/Messenger-Summarizer).
 
-# Ideas:
- - if the convo is < 4 msgs don't do anything
- - if the convo is >= 4 msgs then generate word word_cloud
+# Installation
 
-
- - number of super long msgs . 
- - if there are numbers in it (exclude 420 etc)
- - if it contains a link we must show it as important
+Use `flask run` to turn it on.
